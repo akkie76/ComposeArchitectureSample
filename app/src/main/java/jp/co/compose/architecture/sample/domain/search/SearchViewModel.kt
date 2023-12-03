@@ -3,6 +3,8 @@ package jp.co.compose.architecture.sample.domain.search
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.co.compose.architecture.sample.app.Action
 import jp.co.compose.architecture.sample.app.ActionObserver
@@ -18,6 +20,9 @@ class SearchViewModel @Inject constructor(
     val uiState: State<String>
         get() = _uiState
 
+    // TODO: dataに変換する
+    val users = actionCreator.searchRepository("john").cachedIn(viewModelScope)
+
     fun onCreate() {
         store.register(this)
     }
@@ -26,8 +31,9 @@ class SearchViewModel @Inject constructor(
         store.unRegister()
     }
 
-    suspend fun onSearchRepository() {
-        actionCreator.searchRepository()
+    fun onSearchRepository() {
+        // TODO: dataに変換する
+        actionCreator.searchRepository("john")
     }
 
     override fun <T> onDataChanged(action: Action<T>) {

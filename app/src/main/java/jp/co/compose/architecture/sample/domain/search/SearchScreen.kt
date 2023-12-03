@@ -1,6 +1,8 @@
 package jp.co.compose.architecture.sample.domain.search
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -13,6 +15,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 
 @Composable
 fun SearchScreen(
@@ -44,7 +48,18 @@ fun SearchScreen(
         Surface(
             modifier = Modifier.padding(it)
         ) {
-            Text(state)
+            val pagingItems = viewModel.users.collectAsLazyPagingItems()
+
+            // TODO: Scrollbarを追加する
+            LazyColumn {
+                items(
+                    count = pagingItems.itemCount,
+                    key = pagingItems.itemKey()
+                ) { index ->
+                    val user = pagingItems[index] ?: return@items
+                    Text(user.login)
+                }
+            }
         }
     }
 }
