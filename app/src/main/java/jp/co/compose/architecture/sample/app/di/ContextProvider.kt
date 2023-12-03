@@ -1,17 +1,20 @@
 package jp.co.compose.architecture.sample.app.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import jp.co.compose.architecture.sample.domain.search.SearchStore
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object StoreProviderModule {
+object ContextProvider {
 
     @Singleton
     @Provides
-    fun provideSearchStore(): SearchStore = SearchStore()
+    fun provideAppDatabase(
+        @ApplicationContext context: Context
+    ): Context = context
 }
