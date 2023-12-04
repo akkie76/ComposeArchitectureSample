@@ -15,16 +15,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val actionCreator: SearchActionCreator,
+    actionCreator: SearchActionCreator,
     private val store: SearchStore
 ) : ViewModel(), ActionObserver {
 
-    private val _uiState = mutableStateOf(store.data.data)
-    val uiState: State<String>
+    private val _uiState = mutableStateOf(store.action)
+    val uiState: State<SearchAction>
         get() = _uiState
 
-    // TODO: dataに変換する
-    val users = actionCreator.searchRepository("john").cachedIn(viewModelScope)
+    val users = actionCreator.search("John").cachedIn(viewModelScope)
 
     fun onCreate() {
         store.register(this)
@@ -34,14 +33,12 @@ class SearchViewModel @Inject constructor(
         store.unRegister()
     }
 
-    fun onSearchRepository() {
+    fun onSearchUsers(query: String) {
         // TODO: dataに変換する
-        actionCreator.searchRepository("john")
+        // actionCreator.searchRepository(query)
     }
 
     override fun <T> onDataChanged(action: Action<T>) {
-        if (action is SearchAction) {
-            _uiState.value = action.data as String
-        }
+        _uiState.value = action as SearchAction
     }
 }

@@ -12,9 +12,13 @@ class SearchActionCreatorImpl @Inject constructor(
     private val searchUsersUseCase: SearchUsersUseCase
 ) : SearchActionCreator {
 
-    override fun searchRepository(query: String): Flow<PagingData<GithubUser>> {
-        val pagingData = searchUsersUseCase.search(query)
-        dispatcher.dispatch()
-        return pagingData
+    override fun search(query: String): Flow<PagingData<GithubUser>> {
+        try {
+            val pagingData = searchUsersUseCase.search(query)
+            dispatcher.dispatch(SearchAction.Loaded(pagingData))
+            return pagingData
+        } catch (e: Exception) {
+            throw e
+        }
     }
 }

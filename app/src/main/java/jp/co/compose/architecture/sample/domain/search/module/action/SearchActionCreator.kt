@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface SearchActionCreator {
 
-    fun searchRepository(query: String): Flow<PagingData<GithubUser>>
+    fun search(query: String): Flow<PagingData<GithubUser>>
 }

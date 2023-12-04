@@ -40,7 +40,7 @@ fun SearchScreen(
     }
 
     LaunchedEffect(Unit) {
-        viewModel.onSearchRepository()
+        viewModel.onSearchUsers("john")
     }
 
     Scaffold {

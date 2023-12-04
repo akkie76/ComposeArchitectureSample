@@ -8,7 +8,7 @@ class SearchDispatcherImpl @Inject constructor(
     private val store: SearchStore
 ) : SearchDispatcher {
 
-    override fun dispatch() {
-        store.on(SearchAction.Loaded("loaded"))
+    override fun dispatch(searchAction: SearchAction) {
+        store.on(searchAction)
     }
 }
