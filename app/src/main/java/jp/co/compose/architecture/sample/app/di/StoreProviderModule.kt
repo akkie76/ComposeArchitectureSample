@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import jp.co.compose.architecture.sample.domain.search.SearchStore
+import jp.co.compose.architecture.sample.domain.search.module.store.SearchStore
 import javax.inject.Singleton
 
 @Module

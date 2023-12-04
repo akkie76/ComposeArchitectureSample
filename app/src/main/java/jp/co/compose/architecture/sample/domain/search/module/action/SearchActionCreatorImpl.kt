@@ -1,7 +1,8 @@
-package jp.co.compose.architecture.sample.domain.search
+package jp.co.compose.architecture.sample.domain.search.module.action
 
 import androidx.paging.PagingData
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
+import jp.co.compose.architecture.sample.domain.search.module.dispatcher.SearchDispatcher
 import jp.co.compose.architecture.sample.domain.search.usecase.SearchUsersUseCase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package jp.co.compose.architecture.sample.domain.search
+package jp.co.compose.architecture.sample.domain.search.module.action
 
 import jp.co.compose.architecture.sample.app.Action
 

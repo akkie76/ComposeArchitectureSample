@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import jp.co.compose.architecture.sample.domain.search.SearchDispatcher
-import jp.co.compose.architecture.sample.domain.search.SearchDispatcherImpl
+import jp.co.compose.architecture.sample.domain.search.module.dispatcher.SearchDispatcher
+import jp.co.compose.architecture.sample.domain.search.module.dispatcher.SearchDispatcherImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

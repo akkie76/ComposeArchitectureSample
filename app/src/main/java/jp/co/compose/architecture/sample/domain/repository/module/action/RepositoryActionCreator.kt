@@ -1,4 +1,4 @@
-package jp.co.compose.architecture.sample.domain.repository
+package jp.co.compose.architecture.sample.domain.repository.module.action
 
 import android.app.Activity
 

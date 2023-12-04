@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
-import jp.co.compose.architecture.sample.domain.search.SearchScreen
+import jp.co.compose.architecture.sample.domain.search.ui.SearchScreen
 import jp.co.compose.architecture.sample.ui.theme.ComposeArchitectureSampleTheme
 
 @AndroidEntryPoint

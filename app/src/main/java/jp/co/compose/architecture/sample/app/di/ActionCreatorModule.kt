@@ -4,10 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import jp.co.compose.architecture.sample.domain.repository.RepositoryActionCreator
-import jp.co.compose.architecture.sample.domain.repository.RepositoryActionCreatorImpl
-import jp.co.compose.architecture.sample.domain.search.SearchActionCreator
-import jp.co.compose.architecture.sample.domain.search.SearchActionCreatorImpl
+import jp.co.compose.architecture.sample.domain.repository.module.action.RepositoryActionCreator
+import jp.co.compose.architecture.sample.domain.repository.module.action.RepositoryActionCreatorImpl
+import jp.co.compose.architecture.sample.domain.search.module.action.SearchActionCreator
+import jp.co.compose.architecture.sample.domain.search.module.action.SearchActionCreatorImpl
 
 @Module
 @InstallIn(SingletonComponent::class)

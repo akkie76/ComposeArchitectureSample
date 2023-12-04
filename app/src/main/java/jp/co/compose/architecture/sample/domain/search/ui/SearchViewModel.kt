@@ -1,4 +1,4 @@
-package jp.co.compose.architecture.sample.domain.search
+package jp.co.compose.architecture.sample.domain.search.ui
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -8,6 +8,9 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.co.compose.architecture.sample.app.Action
 import jp.co.compose.architecture.sample.app.ActionObserver
+import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
+import jp.co.compose.architecture.sample.domain.search.module.action.SearchActionCreator
+import jp.co.compose.architecture.sample.domain.search.module.store.SearchStore
 import javax.inject.Inject
 
 @HiltViewModel
