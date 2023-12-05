@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.co.compose.architecture.sample.app.Action
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    actionCreator: SearchActionCreator,
+    private val actionCreator: SearchActionCreator,
     private val store: SearchStore
 ) : ViewModel(), ActionObserver {
 
@@ -36,6 +37,10 @@ class SearchViewModel @Inject constructor(
     fun onSearchUsers(query: String) {
         // TODO: dataに変換する
         // actionCreator.searchRepository(query)
+    }
+
+    fun onUpdateLoadState(loadState: LoadState) {
+        actionCreator.updateState(loadState)
     }
 
     override fun <T> onDataChanged(action: Action<T>) {

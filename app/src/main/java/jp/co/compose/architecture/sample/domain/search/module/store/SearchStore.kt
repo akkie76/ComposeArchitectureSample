@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class SearchStore @Inject constructor() {
 
-    var action: SearchAction = SearchAction.Initialize()
+    var action: SearchAction = SearchAction.NotLoading()
         private set
 
     private var observer: ActionObserver? = null
@@ -20,14 +20,7 @@ class SearchStore @Inject constructor() {
     }
 
     fun on(action: SearchAction) {
-        when (action.type) {
-            SearchAction.Loaded.TYPE -> {
-                this.action = action
-            }
-            else -> {
-                this.action = SearchAction.Initialize()
-            }
-        }
+        this.action = action
         observer?.onDataChanged(action)
     }
 }

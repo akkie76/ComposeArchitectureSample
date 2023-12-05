@@ -1,35 +1,43 @@
 package jp.co.compose.architecture.sample.domain.search.module.action
 
-import androidx.paging.PagingData
+import androidx.paging.LoadState
 import jp.co.compose.architecture.sample.app.Action
-import jp.co.compose.architecture.sample.domain.search.data.GithubUser
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 
 sealed class SearchAction(
-    override val data: Flow<PagingData<GithubUser>>,
+    override val data: LoadState,
     override val type: String
-) : Action<Flow<PagingData<GithubUser>>> {
+) : Action<LoadState> {
 
-    class Initialize(
-        override val data: Flow<PagingData<GithubUser>> = flowOf(PagingData.empty())
+    class NotLoading(
+        state: LoadState = LoadState.NotLoading(false)
     ) : SearchAction(
-        data = data,
+        data = state,
         type = TYPE
     ) {
         companion object {
-            const val TYPE = "SearchAction.Initialize"
+            const val TYPE = "SearchAction.NotLoading"
         }
     }
 
-    class Loaded(
-        override val data: Flow<PagingData<GithubUser>>
+    class Loading(
+        state: LoadState
     ) : SearchAction(
-        data = data,
+        data = state,
         type = TYPE
     ) {
         companion object {
-            const val TYPE = "SearchAction.Loaded"
+            const val TYPE = "SearchAction.Loading"
+        }
+    }
+
+    class Error(
+        state: LoadState
+    ) : SearchAction(
+        data = state,
+        type = TYPE
+    ) {
+        companion object {
+            const val TYPE = "SearchAction.Error"
         }
     }
 }

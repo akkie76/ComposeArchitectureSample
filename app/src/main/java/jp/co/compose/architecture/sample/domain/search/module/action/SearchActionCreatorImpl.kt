@@ -1,5 +1,6 @@
 package jp.co.compose.architecture.sample.domain.search.module.action
 
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.search.module.dispatcher.SearchDispatcher
@@ -13,12 +14,21 @@ class SearchActionCreatorImpl @Inject constructor(
 ) : SearchActionCreator {
 
     override fun search(query: String): Flow<PagingData<GithubUser>> {
-        try {
-            val pagingData = searchUsersUseCase.search(query)
-            dispatcher.dispatch(SearchAction.Loaded(pagingData))
-            return pagingData
-        } catch (e: Exception) {
-            throw e
+        return searchUsersUseCase.search(query)
+    }
+
+    override fun updateState(loadState: LoadState) {
+        val action = when (loadState) {
+            is LoadState.NotLoading -> {
+                SearchAction.NotLoading(loadState)
+            }
+            is LoadState.Loading -> {
+                SearchAction.Loading(loadState)
+            }
+            is LoadState.Error -> {
+                SearchAction.Error(loadState)
+            }
         }
+        dispatcher.dispatch(action)
     }
 }
