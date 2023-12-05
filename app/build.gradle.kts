@@ -77,6 +77,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.paging:paging-compose:3.2.1")
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
     testImplementation("junit:junit:4.13.2")
 
