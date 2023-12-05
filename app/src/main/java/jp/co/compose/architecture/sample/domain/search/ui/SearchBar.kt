@@ -33,7 +33,7 @@ fun SearchBar(
             onValueChange(query)
         },
         leadingIcon = {
-                Icon(
+            Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = null
             )
