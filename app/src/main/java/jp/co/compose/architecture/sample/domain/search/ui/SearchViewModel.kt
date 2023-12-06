@@ -38,13 +38,13 @@ class SearchViewModel @Inject constructor(
         store.unRegister()
     }
 
-    fun onUpdateLoadState(loadState: LoadState) {
-        actionCreator.updateState(loadState)
+    fun onSearchQueryChange(searchQuery: String) {
+        onUpdateLoadState(LoadState.Loading)
+        users = actionCreator.search(searchQuery).cachedIn(viewModelScope)
     }
 
-    fun onSearchQueryChange(searchQuery: String) {
-        // TODO: enterで検索させる
-        users = actionCreator.search(searchQuery).cachedIn(viewModelScope)
+    fun onUpdateLoadState(loadState: LoadState) {
+        actionCreator.updateState(loadState)
     }
 
     override fun <T> onDataChanged(action: Action<T>) {

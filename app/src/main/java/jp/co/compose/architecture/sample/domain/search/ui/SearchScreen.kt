@@ -3,10 +3,16 @@ package jp.co.compose.architecture.sample.domain.search.ui
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -36,29 +42,48 @@ fun SearchScreen(
     }
 
     val state by viewModel.uiState
+    var searchQuery by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
-            SearchBar { query ->
-                viewModel.onSearchQueryChange(query)
-            }
+            SearchBar(
+                text = searchQuery,
+                onValueChange = { newValue ->
+                    searchQuery = newValue
+                    viewModel.onSearchQueryChange(searchQuery)
+                },
+                onClickLeadingIcon = { newValue ->
+                    searchQuery = newValue
+                    viewModel.onSearchQueryChange(newValue)
+                }
+            )
         }
     ) {
-        Surface(
-            modifier = Modifier.padding(it)
-        ) {
+        Surface(modifier = Modifier.padding(it)) {
             val pagingItems = viewModel.users.collectAsLazyPagingItems()
+            val loadStates = pagingItems.loadState.source
 
-            viewModel.onUpdateLoadState(pagingItems.loadState.refresh)
+            LaunchedEffect(loadStates) {
+                viewModel.onUpdateLoadState(loadStates.refresh)
+            }
+
+            if (searchQuery.isEmpty()) {
+                Text("Recent Searches")
+                return@Surface
+            }
 
             when (state) {
                 is SearchAction.NotLoading -> {
-                    UsersColumn(pagingItems)
+                    UsersColumn(pagingItems) {
+                        // TODO: Navigate
+                    }
                 }
                 is SearchAction.Loading -> {
-                    PreviewProgressIndicator()
+                    ProgressIndicator()
                 }
                 is SearchAction.Error -> {
+                    Text("Error")
                 }
             }
         }

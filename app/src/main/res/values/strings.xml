@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">ComposeArchitectureSample</string>
-    <string name="placeholder_search">Search User</string>
+    <string name="placeholder_search">Search GitHub User</string>
 </resources>

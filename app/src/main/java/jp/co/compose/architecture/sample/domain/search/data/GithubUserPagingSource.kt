@@ -20,7 +20,6 @@ class GithubUserPagingSource(
                 nextKey = if (page == response.totalCount) null else page + 1
             )
         } catch (exception: Exception) {
-            // TODO: ErrorHandling
             LoadResult.Error(exception)
         }
     }
