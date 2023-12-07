@@ -10,14 +10,7 @@ class SearchUsersUseCaseImpl @Inject constructor(
     private val searchUsersRepository: SearchUsersRepository
 ) : SearchUsersUseCase {
 
-    /**
-     * TODO: ErrorHandling
-     */
     override fun search(query: String): Flow<PagingData<GithubUser>> {
-        try {
-            return searchUsersRepository.search(query)
-        } catch (e: Exception) {
-            throw e
-        }
+        return searchUsersRepository.search(query)
     }
 }

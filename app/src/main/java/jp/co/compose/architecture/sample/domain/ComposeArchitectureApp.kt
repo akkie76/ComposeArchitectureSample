@@ -7,12 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import jp.co.compose.architecture.sample.domain.repository.ui.RepositoryScreen
-import jp.co.compose.architecture.sample.domain.search.data.GithubUser.Companion.fromJson
 import jp.co.compose.architecture.sample.domain.search.ui.SearchScreen
 
 private const val SEARCH_ROUTE = "search"
 private const val REPOSITORY_ROUTE = "repository"
-private const val GITHUB_USE_KEY = "githubUser"
+private const val LOGIN_KEY = "login"
 
 @Composable
 fun ComposeArchitectureApp() {
@@ -21,21 +20,25 @@ fun ComposeArchitectureApp() {
     NavHost(navController = navController, startDestination = SEARCH_ROUTE) {
         composable(SEARCH_ROUTE) {
             SearchScreen {
-                // NOTE: https://issuetracker.google.com/issues/309005685
-                navController.navigate("repository/${it.toJson()}")
+                navController.navigate("repository/${it.login}")
             }
         }
         composable(
-            "$REPOSITORY_ROUTE/{$GITHUB_USE_KEY}",
+            "$REPOSITORY_ROUTE/{$LOGIN_KEY}",
             arguments = listOf(
-                navArgument(GITHUB_USE_KEY) {
+                navArgument(LOGIN_KEY) {
                     type = NavType.StringType
                 }
             )
         ) {
-            val json = it.arguments?.getString(GITHUB_USE_KEY)
-                ?: throw IllegalArgumentException("GitHub user is not specified.")
-            RepositoryScreen(githubUser = json.fromJson())
+            val login = it.arguments?.getString(LOGIN_KEY)
+                ?: throw IllegalArgumentException("Login is not specified.")
+            RepositoryScreen(
+                login = login,
+                onBackClick = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

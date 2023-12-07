@@ -10,4 +10,6 @@ interface SearchActionCreator {
     fun search(query: String): Flow<PagingData<GithubUser>>
 
     fun updateState(loadState: LoadState)
+
+    suspend fun fetchUser(login: String)
 }

@@ -31,4 +31,8 @@ class SearchActionCreatorImpl @Inject constructor(
         }
         dispatcher.dispatch(action)
     }
+
+    override suspend fun fetchUser(login: String) {
+        TODO("Not yet implemented")
+    }
 }

@@ -11,6 +11,9 @@ class RepositoryViewModel @Inject constructor(
     private val repositoryActionCreator: RepositoryActionCreator
 ) : ViewModel() {
 
+    fun onFetchUserInfo() {
+    }
+
     fun onLaunchBrowser(activity: Activity, url: String) {
         repositoryActionCreator.launchBrowser(activity, url)
     }
