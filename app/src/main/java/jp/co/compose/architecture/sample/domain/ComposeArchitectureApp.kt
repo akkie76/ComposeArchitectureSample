@@ -6,8 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import jp.co.compose.architecture.sample.domain.repository.ui.RepositoryScreen
 import jp.co.compose.architecture.sample.domain.search.ui.SearchScreen
+import jp.co.compose.architecture.sample.domain.userInfo.ui.UserInfoScreen
 
 private const val SEARCH_ROUTE = "search"
 private const val REPOSITORY_ROUTE = "repository"
@@ -33,7 +33,7 @@ fun ComposeArchitectureApp() {
         ) {
             val login = it.arguments?.getString(LOGIN_KEY)
                 ?: throw IllegalArgumentException("Login is not specified.")
-            RepositoryScreen(
+            UserInfoScreen(
                 login = login,
                 onBackClick = {
                     navController.navigateUp()

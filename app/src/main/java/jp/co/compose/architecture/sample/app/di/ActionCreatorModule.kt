@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import jp.co.compose.architecture.sample.domain.repository.module.action.RepositoryActionCreator
-import jp.co.compose.architecture.sample.domain.repository.module.action.RepositoryActionCreatorImpl
+import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoActionCreator
+import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoActionCreatorImpl
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchActionCreator
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchActionCreatorImpl
 
@@ -19,7 +19,7 @@ abstract class ActionCreatorModule {
     ): SearchActionCreator
 
     @Binds
-    abstract fun bindRepositoryActionCreator(
-        repositoryActionCreatorImpl: RepositoryActionCreatorImpl
-    ): RepositoryActionCreator
+    abstract fun bindUserInfoActionCreator(
+        repositoryActionCreatorImpl: UserInfoActionCreatorImpl
+    ): UserInfoActionCreator
 }

@@ -4,8 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import jp.co.compose.architecture.sample.domain.repository.usecase.ProvideBrowserUseCase
-import jp.co.compose.architecture.sample.domain.repository.usecase.ProvideBrowserUseCaseImpl
+import jp.co.compose.architecture.sample.domain.userInfo.usecase.ProvideBrowserUseCase
+import jp.co.compose.architecture.sample.domain.userInfo.usecase.ProvideBrowserUseCaseImpl
 import jp.co.compose.architecture.sample.domain.search.usecase.SearchUsersUseCase
 import jp.co.compose.architecture.sample.domain.search.usecase.SearchUsersUseCaseImpl
 
