@@ -52,7 +52,7 @@ fun GithubUserColumn(
             ) {
                 Spacer(modifier = Modifier.width(16.dp))
                 AsyncImage(
-                    model = "", // user.avatarUrl,
+                    model = user.avatarUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)

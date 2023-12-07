@@ -11,19 +11,17 @@ data class GithubUser(
     @SerializedName("avatar_url")
     var avatarUrl: String
 ) {
-    fun toJson(): String =
-        Gson().toJson(this.encodeAvatarUrl())
-
-    private fun encodeAvatarUrl(): GithubUser =
-        copy().apply {
-            avatarUrl = Uri.encode(avatarUrl)
-        }
+    fun toJson(): String {
+        this.avatarUrl = Uri.encode(this.avatarUrl)
+        return Gson().toJson(this)
+    }
 
     companion object {
-        fun String.fromJson(): GithubUser =
-            Gson().fromJson(this, GithubUser::class.java)
+        fun String.fromJson(): GithubUser {
+            return Gson().fromJson(this, GithubUser::class.java)
                 .apply {
                     avatarUrl = Uri.decode(avatarUrl)
                 }
+        }
     }
 }
