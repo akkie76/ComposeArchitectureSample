@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
-import jp.co.compose.architecture.sample.domain.search.ui.SearchScreen
-import jp.co.compose.architecture.sample.ui.theme.ComposeArchitectureSampleTheme
+import jp.co.compose.architecture.sample.app.ui.theme.ComposeArchitectureSampleTheme
+import jp.co.compose.architecture.sample.domain.ComposeArchitectureApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,8 +25,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // Greeting("Android")
-                    SearchScreen()
+                    ComposeArchitectureSampleTheme {
+                        ComposeArchitectureApp()
+                    }
                 }
             }
         }

@@ -12,17 +12,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.paging.compose.collectAsLazyPagingItems
+import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
+    onNavigate: (GithubUser) -> Unit
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
@@ -43,7 +44,6 @@ fun SearchScreen(
 
     val state by viewModel.uiState
     var searchQuery by remember { mutableStateOf("") }
-    val focusManager = LocalFocusManager.current
 
     Scaffold(
         topBar = {
@@ -75,8 +75,8 @@ fun SearchScreen(
 
             when (state) {
                 is SearchAction.NotLoading -> {
-                    UsersColumn(pagingItems) {
-                        // TODO: Navigate
+                    GithubUserColumn(pagingItems) { githubUser ->
+                        onNavigate(githubUser)
                     }
                 }
                 is SearchAction.Loading -> {

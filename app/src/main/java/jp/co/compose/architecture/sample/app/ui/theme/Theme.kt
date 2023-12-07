@@ -1,4 +1,4 @@
-package jp.co.compose.architecture.sample.ui.theme
+package jp.co.compose.architecture.sample.app.ui.theme
 
 import android.app.Activity
 import android.os.Build

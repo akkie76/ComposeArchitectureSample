@@ -1,4 +1,4 @@
-package jp.co.compose.architecture.sample.app
+package jp.co.compose.architecture.sample
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

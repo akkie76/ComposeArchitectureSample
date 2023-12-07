@@ -24,9 +24,9 @@ import coil.compose.AsyncImage
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 
 @Composable
-fun UsersColumn(
+fun GithubUserColumn(
     pagingItems: LazyPagingItems<GithubUser>,
-    onSelected: (String) -> Unit
+    onSelected: (GithubUser) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     // TODO: Add Scrollbar
@@ -46,13 +46,13 @@ fun UsersColumn(
                         selected = true,
                         onClick = {
                             focusManager.clearFocus()
-                            onSelected(user.login)
+                            onSelected(user)
                         }
                     )
             ) {
                 Spacer(modifier = Modifier.width(16.dp))
                 AsyncImage(
-                    model = user.avatarUrl,
+                    model = "", // user.avatarUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)
