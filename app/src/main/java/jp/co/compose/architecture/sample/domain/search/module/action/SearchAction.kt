@@ -4,40 +4,24 @@ import androidx.paging.LoadState
 import jp.co.compose.architecture.sample.app.Action
 
 sealed class SearchAction(
-    override val data: LoadState,
-    override val type: String
+    override val data: LoadState
 ) : Action<LoadState> {
 
     class NotLoading(
         state: LoadState = LoadState.NotLoading(false)
     ) : SearchAction(
-        data = state,
-        type = TYPE
-    ) {
-        companion object {
-            const val TYPE = "SearchAction.NotLoading"
-        }
-    }
+        data = state
+    )
 
     class Loading(
         state: LoadState
     ) : SearchAction(
-        data = state,
-        type = TYPE
-    ) {
-        companion object {
-            const val TYPE = "SearchAction.Loading"
-        }
-    }
+        data = state
+    )
 
     class Error(
         state: LoadState
     ) : SearchAction(
-        data = state,
-        type = TYPE
-    ) {
-        companion object {
-            const val TYPE = "SearchAction.Error"
-        }
-    }
+        data = state
+    )
 }

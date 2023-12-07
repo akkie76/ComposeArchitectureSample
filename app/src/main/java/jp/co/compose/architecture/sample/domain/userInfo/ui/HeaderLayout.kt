@@ -1,6 +1,5 @@
 package jp.co.compose.architecture.sample.domain.userInfo.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,15 +20,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import jp.co.compose.architecture.sample.R
+import coil.compose.AsyncImage
+import jp.co.compose.architecture.sample.domain.userInfo.data.DisplayGithubUser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeaderLayout(
+    githubUser: DisplayGithubUser,
     onBackClick: () -> Unit = {}
 ) {
     Surface {
@@ -55,12 +56,13 @@ fun HeaderLayout(
                     .padding(bottom = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    contentDescription = "Profile Picture",
+                AsyncImage(
+                    model = githubUser.avatarUrl,
+                    contentDescription = null,
                     modifier = Modifier
                         .size(48.dp)
-                        .clip(CircleShape)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
                 )
                 Column(
                     modifier = Modifier
@@ -91,5 +93,5 @@ fun HeaderLayout(
 @Preview
 @Composable
 private fun PreviewHeaderLayout() {
-    HeaderLayout()
+    HeaderLayout(DisplayGithubUser())
 }

@@ -9,7 +9,10 @@ object ApiClient {
     private const val BASE_URL = "https://api.github.com/"
 
     fun create(): GithubApiService {
-        val logger = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
+        val logger = HttpLoggingInterceptor()
+            .apply {
+                level = HttpLoggingInterceptor.Level.BASIC
+            }
         val authInterceptor = AuthInterceptor()
 
         val client = OkHttpClient.Builder()

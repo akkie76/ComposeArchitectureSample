@@ -33,4 +33,26 @@ interface GithubApiService {
     suspend fun users(
         @Path("login") login: String
     ): GithubUser
+
+    /**
+     * Retrieves a list of followers for the specified GitHub user.
+     *
+     * @param login The GitHub username of the user.
+     * @return A list of [GithubUser] objects representing the followers.
+     */
+    @GET("users/{login}/followers")
+    suspend fun followers(
+        @Path("login") login: String
+    ): List<GithubUser>
+
+    /**
+     * Retrieves a list of users that the specified GitHub user is following.
+     *
+     * @param login The GitHub username of the user.
+     * @return A list of [GithubUser] objects representing the users being followed.
+     */
+    @GET("users/{login}/following")
+    suspend fun following(
+        @Path("login") login: String
+    ): List<GithubUser>
 }
