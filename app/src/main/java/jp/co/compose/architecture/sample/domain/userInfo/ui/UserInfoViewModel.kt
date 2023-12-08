@@ -26,7 +26,7 @@ class UserInfoViewModel @Inject constructor(
         store.register(this)
     }
 
-    fun onDestroy() {
+    fun onDispose() {
         store.unRegister()
     }
 

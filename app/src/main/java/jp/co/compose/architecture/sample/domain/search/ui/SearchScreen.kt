@@ -32,18 +32,16 @@ fun SearchScreen(
             if (event == Lifecycle.Event.ON_CREATE) {
                 viewModel.onCreate()
             }
-            if (event == Lifecycle.Event.ON_DESTROY) {
-                viewModel.onDestroy()
-            }
         }
         lifecycle.addObserver(observer)
         onDispose {
+            viewModel.onDispose()
             lifecycle.removeObserver(observer)
         }
     }
 
     val state by viewModel.uiState
-    var searchQuery by remember { mutableStateOf("") }
+    var searchQuery by remember { mutableStateOf(viewModel.query) }
 
     Scaffold(
         topBar = {

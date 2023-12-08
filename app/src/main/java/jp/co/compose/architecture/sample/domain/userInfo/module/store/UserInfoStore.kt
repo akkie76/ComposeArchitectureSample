@@ -16,6 +16,7 @@ class UserInfoStore @Inject constructor() {
     }
 
     fun unRegister() {
+        action = UserInfoAction.Initialize()
         observer = null
     }
 

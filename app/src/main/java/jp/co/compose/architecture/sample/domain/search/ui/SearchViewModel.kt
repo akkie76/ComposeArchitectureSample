@@ -30,17 +30,21 @@ class SearchViewModel @Inject constructor(
     var users = flowOf(PagingData.empty<GithubUser>())
         private set
 
+    var query: String = ""
+        private set
+
     fun onCreate() {
         store.register(this)
     }
 
-    fun onDestroy() {
+    fun onDispose() {
         store.unRegister()
     }
 
     fun onSearchQueryChange(searchQuery: String) {
         onUpdateLoadState(LoadState.Loading)
-        users = actionCreator.search(searchQuery).cachedIn(viewModelScope)
+        query = searchQuery
+        users = actionCreator.search(query).cachedIn(viewModelScope)
     }
 
     fun onUpdateLoadState(loadState: LoadState) {

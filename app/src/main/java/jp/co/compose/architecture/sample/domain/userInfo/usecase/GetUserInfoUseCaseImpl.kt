@@ -1,6 +1,8 @@
 package jp.co.compose.architecture.sample.domain.userInfo.usecase
 
-import jp.co.compose.architecture.sample.domain.userInfo.data.DisplayGithubUser
+import jp.co.compose.architecture.sample.domain.userInfo.data.GithubUserInfo
+import jp.co.compose.architecture.sample.domain.userInfo.data.RepositoryInfo
+import jp.co.compose.architecture.sample.domain.userInfo.data.RepositoryInfo.Companion.filterNonForkedRepos
 import jp.co.compose.architecture.sample.domain.userInfo.data.UserInfo
 import jp.co.compose.architecture.sample.domain.userInfo.data.UserInfoRepository
 import javax.inject.Inject
@@ -10,18 +12,16 @@ class GetUserInfoUseCaseImpl @Inject constructor(
 ) : GetUserInfoUseCase {
 
     override suspend fun fetchUserInfo(login: String): UserInfo {
-        val displayUser = createDisplayUser(login)
-        return UserInfo(displayUser)
+        val githubUserInfo = fetchGithubUserInfo(login)
+        val repositories = fetchNonForkedRepositories(login)
+        return UserInfo(githubUserInfo, repositories)
     }
 
-    private suspend fun createDisplayUser(login: String): DisplayGithubUser {
-        val userDetail = userInfoRepository.fetchUserDetail(login)
-        return DisplayGithubUser(
-            login = userDetail.login,
-            name = userDetail.name,
-            avatarUrl = userDetail.avatarUrl,
-            followers = userInfoRepository.fetchFollowersCount(login),
-            following = userInfoRepository.fetchFollowingCount(login)
-        )
+    private suspend fun fetchGithubUserInfo(login: String): GithubUserInfo {
+        return userInfoRepository.fetchUserDetail(login)
+    }
+
+    private suspend fun fetchNonForkedRepositories(login: String): List<RepositoryInfo> {
+        return userInfoRepository.fetchRepositories(login).filterNonForkedRepos()
     }
 }
