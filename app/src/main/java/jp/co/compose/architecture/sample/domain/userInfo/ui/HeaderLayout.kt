@@ -104,7 +104,6 @@ private fun PreviewHeaderLayout() {
         avatarUrl = "https://avatars.githubusercontent.com/u/11865114?v=4",
         following = 999,
         followers = 111
-
     )
     HeaderLayout(githubUser)
 }
