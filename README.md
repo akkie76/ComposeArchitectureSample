@@ -15,6 +15,8 @@ Explore the world of GitHub with our user-friendly mobile application, crafted w
 
 ## Screenshots
 
+![Screenshots](image/screenshots.png)
+
 ## Requirements
 
 ### GitHub API Key
@@ -30,7 +32,33 @@ The app is still usable without the API key, but you won't be able to access Git
 
 ## Architecture
 
+The application leverages the Flux architecture to ensure a unidirectional data flow, enhancing the predictability and manageability of the state throughout the application. The architecture is divided into distinct layers, each with defined responsibilities, to promote separation of concerns and modular development.
+
 ### Flux Architecture
+- **Action**: Indicates an intent to change the state within the app.
+- **Dispatcher**: Processes actions and sends updates to the registered stores.
+- **Store**: Holds the state and updates the UI components in response to changes.
+- **View**: Displays the state from the stores and dispatches actions based on user interactions.
+
+By adhering to these structural and architectural rules, the Jetpack Compose Flux sample app showcases a robust and scalable approach to Android app development, capitalizing on the reactive programming benefits of the Flux architecture.
+
+### Key Components
+
+#### Entry Points
+- `MainActivity.kt` & `MainApplication.kt`: Serve as the application's launching points. The MainActivity is the primary UI container, while the MainApplication handles application-wide initializations.
+
+#### /app Package
+- `data`: Contains classes such as `ApiClient`, `AuthInterceptor`, and `GithubApiService` for managing network requests and responses.
+- `di`: Houses dependency injection modules like `ApiModule`, `RepositoryModule`, and `UseCaseModule`, providing instances for data handling, action creation, and state dispatching.
+- `module`: Includes `Action` and `ActionObserver` classes that define the actions to be dispatched and observed within the app.
+- `ui`: Comprises UI components like `ErrorContent`, `ProgressIndicator`, and theming utilities to define the application's appearance.
+
+#### /domain Package
+- `search`: Contains the domain-specific logic for the GitHub user search feature, including data models, repositories, use cases, and UI components relevant to the search functionality.
+- `userInfo`: Focused on user information, detailing data handling and UI rendering for GitHub user profiles and repository information.
+
+### Package Reference Rules
+The `app` package can utilize functionalities from the `domain` package but not the other way around. This ensures the domain layer's independence from the app-specific implementations, allowing for better reusability and testability. Each domain module like `search` and `userInfo` is self-contained with its own set of actions, dispatchers, stores, data models, repositories, and UI components.
 
 ## Function
 
