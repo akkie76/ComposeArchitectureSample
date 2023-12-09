@@ -18,9 +18,6 @@
     <dimen name="github_user_row_height">56dp</dimen>
     <dimen name="github_user_image_size">40dp</dimen>
 
-    <!--HeaderLayout-->
-    <dimen name="header_icon_size">48dp</dimen>
-
     <!--RepositoryCard-->
     <dimen name="card_shape">8dp</dimen>
 </resources>

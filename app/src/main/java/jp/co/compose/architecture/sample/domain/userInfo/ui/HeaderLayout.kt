@@ -60,7 +60,7 @@ fun HeaderLayout(
                     model = githubUser.avatarUrl,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.header_icon_size))
+                        .size(dimensionResource(id = R.dimen.github_user_image_size))
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
