@@ -17,10 +17,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
+import jp.co.compose.architecture.sample.R
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 
 @Composable
@@ -29,7 +30,6 @@ fun GithubUserColumn(
     onSelected: (GithubUser) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
-    // TODO: Add Scrollbar
     LazyColumn {
         items(
             count = pagingItems.itemCount,
@@ -41,7 +41,7 @@ fun GithubUserColumn(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(dimensionResource(id = R.dimen.github_user_row_height))
                     .selectable(
                         selected = true,
                         onClick = {
@@ -50,16 +50,17 @@ fun GithubUserColumn(
                         }
                     )
             ) {
-                Spacer(modifier = Modifier.width(16.dp))
+                val spacerWidth = dimensionResource(id = R.dimen.github_user_spacer_width)
+                Spacer(modifier = Modifier.width(spacerWidth))
                 AsyncImage(
                     model = user.avatarUrl,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(40.dp)
+                        .size(dimensionResource(id = R.dimen.github_user_image_size))
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(spacerWidth))
                 Text(
                     text = user.login,
                     style = MaterialTheme.typography.bodyLarge

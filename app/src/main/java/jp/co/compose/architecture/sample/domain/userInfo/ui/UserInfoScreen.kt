@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import jp.co.compose.architecture.sample.domain.search.ui.ProgressIndicator
+import jp.co.compose.architecture.sample.app.ui.ProgressIndicator
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
 
 @Composable
