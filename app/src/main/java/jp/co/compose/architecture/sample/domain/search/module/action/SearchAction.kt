@@ -1,7 +1,7 @@
 package jp.co.compose.architecture.sample.domain.search.module.action
 
 import androidx.paging.LoadState
-import jp.co.compose.architecture.sample.app.Action
+import jp.co.compose.architecture.sample.app.module.Action
 
 sealed class SearchAction(
     override val data: LoadState
@@ -20,7 +20,8 @@ sealed class SearchAction(
     )
 
     class Error(
-        state: LoadState
+        state: LoadState.Error,
+        val message: String? = state.error.message
     ) : SearchAction(
         data = state
     )

@@ -13,10 +13,10 @@ data class RepositoryInfo(
     var stars: Int
 ) {
     val displayDescription: String
-        get() = description ?: "undefined"
+        get() = description ?: "None Description"
 
     val displayLanguage: String
-        get() = language ?: "undefined"
+        get() = language ?: ""
 
     companion object {
         fun List<RepositoryInfo>.filterNonForkedRepos() = this.filter { !it.fork }

@@ -1,6 +1,6 @@
 package jp.co.compose.architecture.sample.domain.search.module.store
 
-import jp.co.compose.architecture.sample.app.ActionObserver
+import jp.co.compose.architecture.sample.app.module.ActionObserver
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
 import javax.inject.Inject
 

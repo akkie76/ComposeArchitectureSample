@@ -1,28 +1,26 @@
 package jp.co.compose.architecture.sample.domain.userInfo.ui
 
 import android.app.Activity
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import jp.co.compose.architecture.sample.R
-import jp.co.compose.architecture.sample.app.ui.ProgressIndicator
+import jp.co.compose.architecture.sample.app.ui.ErrorContent
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
+import jp.co.compose.architecture.sample.domain.userInfo.ui.component.InitialContent
+import jp.co.compose.architecture.sample.domain.userInfo.ui.component.RepositoryColumn
+import kotlinx.coroutines.launch
 
 @Composable
 fun UserInfoScreen(
@@ -51,48 +49,47 @@ fun UserInfoScreen(
 
     val state by viewModel.uiState
     val activity = LocalContext.current as Activity
+    val coroutineScope = rememberCoroutineScope()
 
-    UserInfoScreenContent(
+    UserInfoContent(
         state = state,
-        onBackClick,
+        onBackClick = onBackClick,
         onSelected = { url ->
             viewModel.onLaunchBrowser(activity, url)
+        },
+        onRetry = {
+            coroutineScope.launch {
+                viewModel.onRetry(login)
+            }
         }
     )
 }
 
 @Composable
-fun UserInfoScreenContent(
+fun UserInfoContent(
     state: UserInfoAction,
     onBackClick: () -> Unit = {},
-    onSelected: (String) -> Unit = {}
+    onSelected: (String) -> Unit = {},
+    onRetry: () -> Unit = {}
 ) {
     Scaffold { paddingValues ->
         Surface(modifier = Modifier.padding(paddingValues)) {
             when (state) {
                 is UserInfoAction.Initialize -> {
-                    ProgressIndicator()
+                    InitialContent(onBackClick = onBackClick)
                 }
                 is UserInfoAction.Ready -> {
-                    LazyColumn {
-                        item {
-                            HeaderLayout(
-                                githubUser = state.data.githubUserInfo,
-                                onBackClick = onBackClick
-                            )
-                        }
-                        items(state.data.repositories) { repository ->
-                            RepositoryCard(
-                                repository = repository,
-                                onSelected = onSelected
-                            )
-                        }
-                        item {
-                            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.medium_space)))
-                        }
-                    }
+                    RepositoryColumn(
+                        state = state,
+                        onBackClick = onBackClick,
+                        onSelected = onSelected
+                    )
                 }
                 is UserInfoAction.Error -> {
+                    ErrorContent(
+                        message = state.message,
+                        onRetry = onRetry
+                    )
                 }
             }
         }
@@ -101,6 +98,6 @@ fun UserInfoScreenContent(
 
 @Preview
 @Composable
-private fun PreviewUserInfoScreen() {
-    UserInfoScreen(login = "akkie76")
+private fun PreviewUserInfoScreenContent() {
+    UserInfoContent(state = UserInfoAction.Initialize())
 }

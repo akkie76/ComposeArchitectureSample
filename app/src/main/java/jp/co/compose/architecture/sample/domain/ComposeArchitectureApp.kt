@@ -16,7 +16,6 @@ private const val LOGIN_KEY = "login"
 @Composable
 fun ComposeArchitectureApp() {
     val navController = rememberNavController()
-
     NavHost(navController = navController, startDestination = SEARCH_ROUTE) {
         composable(SEARCH_ROUTE) {
             SearchScreen {

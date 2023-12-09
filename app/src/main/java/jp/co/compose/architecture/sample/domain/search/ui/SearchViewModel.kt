@@ -8,8 +8,8 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.co.compose.architecture.sample.app.Action
-import jp.co.compose.architecture.sample.app.ActionObserver
+import jp.co.compose.architecture.sample.app.module.Action
+import jp.co.compose.architecture.sample.app.module.ActionObserver
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchActionCreator
@@ -45,6 +45,12 @@ class SearchViewModel @Inject constructor(
         onUpdateLoadState(LoadState.Loading)
         query = searchQuery
         users = actionCreator.search(query).cachedIn(viewModelScope)
+    }
+
+    fun onRefresh(searchQuery: String) {
+        onUpdateLoadState(LoadState.NotLoading(false))
+        query = searchQuery
+        users = flowOf(PagingData.empty())
     }
 
     fun onUpdateLoadState(loadState: LoadState) {

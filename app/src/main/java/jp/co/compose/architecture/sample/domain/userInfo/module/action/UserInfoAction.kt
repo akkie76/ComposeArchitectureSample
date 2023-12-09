@@ -1,6 +1,6 @@
 package jp.co.compose.architecture.sample.domain.userInfo.module.action
 
-import jp.co.compose.architecture.sample.app.Action
+import jp.co.compose.architecture.sample.app.module.Action
 import jp.co.compose.architecture.sample.domain.userInfo.data.UserInfo
 
 sealed class UserInfoAction(
@@ -20,7 +20,8 @@ sealed class UserInfoAction(
     )
 
     class Error(
-        override val data: UserInfo = UserInfo.Initial
+        override val data: UserInfo = UserInfo.Initial,
+        val message: String?
     ) : UserInfoAction(
         data = data
     )

@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,8 +28,8 @@ import jp.co.compose.architecture.sample.R
 @Composable
 fun ErrorContent(
     modifier: Modifier = Modifier,
-    message: String = stringResource(R.string.error_message),
-    onRetry: (() -> Unit)? = null
+    message: String? = null,
+    onRetry: (() -> Unit) = {}
 ) {
     Column(
         modifier = modifier
@@ -45,19 +46,18 @@ fun ErrorContent(
         )
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.error_spacer_height)))
         Text(
-            text = message,
+            text = message ?: stringResource(R.string.error_message),
             style = MaterialTheme.typography.bodyLarge.copy(fontSize = dimensionResource(id = R.dimen.error_title_font_size).value.sp),
             color = MaterialTheme.colorScheme.error,
-            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.error_title_height))
+            modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.error_title_height)),
+            textAlign = TextAlign.Center
         )
-        onRetry?.let { onClick ->
-            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.error_spacer_height)))
-            Button(
-                onClick = onClick,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(stringResource(R.string.retry))
-            }
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.error_spacer_height)))
+        Button(
+            onClick = onRetry,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        ) {
+            Text(stringResource(R.string.retry))
         }
     }
 }
@@ -66,6 +66,6 @@ fun ErrorContent(
 @Composable
 private fun PreviewErrorContent() {
     Surface {
-        ErrorContent(message = "Error Message")
+        ErrorContent()
     }
 }

@@ -1,6 +1,6 @@
 package jp.co.compose.architecture.sample.domain.userInfo.module.store
 
-import jp.co.compose.architecture.sample.app.ActionObserver
+import jp.co.compose.architecture.sample.app.module.ActionObserver
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
 import javax.inject.Inject
 

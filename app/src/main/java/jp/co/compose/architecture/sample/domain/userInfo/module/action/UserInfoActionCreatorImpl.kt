@@ -17,8 +17,13 @@ class UserInfoActionCreatorImpl @Inject constructor(
             val userInfo = getUserInfoUseCase.fetchUserInfo(login)
             dispatcher.dispatch(UserInfoAction.Ready(userInfo))
         } catch (e: Exception) {
-            dispatcher.dispatch(UserInfoAction.Error())
+            dispatcher.dispatch(UserInfoAction.Error(message = e.message))
         }
+    }
+
+    override suspend fun retry(login: String) {
+        dispatcher.dispatch(UserInfoAction.Initialize())
+        fetchUserInfo(login)
     }
 
     override fun launchBrowser(activity: Activity, url: String) {

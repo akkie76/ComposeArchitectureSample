@@ -6,5 +6,7 @@ interface UserInfoActionCreator {
 
     suspend fun fetchUserInfo(login: String)
 
+    suspend fun retry(login: String)
+
     fun launchBrowser(activity: Activity, url: String)
 }

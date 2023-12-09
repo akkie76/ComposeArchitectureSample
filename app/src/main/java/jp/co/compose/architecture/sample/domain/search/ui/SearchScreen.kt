@@ -20,6 +20,9 @@ import jp.co.compose.architecture.sample.app.ui.ErrorContent
 import jp.co.compose.architecture.sample.app.ui.ProgressIndicator
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
+import jp.co.compose.architecture.sample.domain.search.ui.component.GithubUserColumn
+import jp.co.compose.architecture.sample.domain.search.ui.component.InitialContent
+import jp.co.compose.architecture.sample.domain.search.ui.component.SearchBar
 
 @Composable
 fun SearchScreen(
@@ -82,7 +85,14 @@ fun SearchScreen(
                     ProgressIndicator()
                 }
                 is SearchAction.Error -> {
-                    ErrorContent()
+                    val errorState = state as SearchAction.Error
+                    ErrorContent(
+                        message = errorState.message,
+                        onRetry = {
+                            searchQuery = ""
+                            viewModel.onRefresh(searchQuery)
+                        }
+                    )
                 }
             }
         }

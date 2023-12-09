@@ -5,8 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jp.co.compose.architecture.sample.app.Action
-import jp.co.compose.architecture.sample.app.ActionObserver
+import jp.co.compose.architecture.sample.app.module.Action
+import jp.co.compose.architecture.sample.app.module.ActionObserver
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoActionCreator
 import jp.co.compose.architecture.sample.domain.userInfo.module.store.UserInfoStore
@@ -32,6 +32,10 @@ class UserInfoViewModel @Inject constructor(
 
     suspend fun onFetchUserInfo(login: String) {
         userInfoActionCreator.fetchUserInfo(login)
+    }
+
+    suspend fun onRetry(login: String) {
+        userInfoActionCreator.retry(login)
     }
 
     fun onLaunchBrowser(activity: Activity, url: String) {
