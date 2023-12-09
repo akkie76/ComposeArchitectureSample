@@ -35,6 +35,9 @@ The app is still usable without the API key, but you won't be able to access Git
 The application leverages the Flux architecture to ensure a unidirectional data flow, enhancing the predictability and manageability of the state throughout the application. The architecture is divided into distinct layers, each with defined responsibilities, to promote separation of concerns and modular development.
 
 ### Flux Architecture
+
+![Screenshots](image/flux.png)
+
 - **Action**: Indicates an intent to change the state within the app.
 - **Dispatcher**: Processes actions and sends updates to the registered stores.
 - **Store**: Holds the state and updates the UI components in response to changes.
