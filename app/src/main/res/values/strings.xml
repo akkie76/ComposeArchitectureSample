@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ComposeArchitectureSample</string>
+    <string name="app_name">GitHub</string>
     <string name="placeholder_search">Search GitHub user</string>
     <string name="initial_message">Start typing to search for GitHub users.</string>
     <string name="error_message">Sorry !\nAn error occurred.</string>
