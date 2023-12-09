@@ -26,7 +26,7 @@ fun ProgressIndicator(
     ) {
         Text(text = message)
         CircularProgressIndicator(
-            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.progress_padding))
+            modifier = Modifier.padding(top = dimensionResource(id = R.dimen.medium_space))
         )
     }
 }

@@ -20,10 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import jp.co.compose.architecture.sample.R
 import jp.co.compose.architecture.sample.domain.userInfo.data.GithubUserInfo
@@ -52,23 +52,22 @@ fun HeaderLayout(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp)
-                    .padding(end = 16.dp)
-                    .padding(bottom = 8.dp),
+                    .padding(horizontal = dimensionResource(id = R.dimen.large_space))
+                    .padding(bottom = dimensionResource(id = R.dimen.large_space)),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 AsyncImage(
                     model = githubUser.avatarUrl,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(dimensionResource(id = R.dimen.header_icon_size))
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = 16.dp)
+                        .padding(start = dimensionResource(id = R.dimen.large_space))
                 ) {
                     Text(
                         text = githubUser.userName,
@@ -77,7 +76,7 @@ fun HeaderLayout(
                     )
                     Text(text = githubUser.fullName)
                     Row(
-                        modifier = Modifier.padding(top = 4.dp),
+                        modifier = Modifier.padding(top = dimensionResource(id = R.dimen.small_space)),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -86,7 +85,7 @@ fun HeaderLayout(
                         )
                         val follows = "${githubUser.followers} followers - ${githubUser.following} following"
                         Text(
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier.padding(dimensionResource(id = R.dimen.small_space)),
                             text = follows
                         )
                     }

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="large_space">16dp</dimen>
+    <dimen name="medium_space">8dp</dimen>
+    <dimen name="small_space">4dp</dimen>
+
     <!--InitialContent-->
     <dimen name="github_icon_size">64dp</dimen>
     <dimen name="initial_content_spacer_height">24dp</dimen>
 
-    <!--ProgressIndicator-->
-    <dimen name="progress_padding">8dp</dimen>
-
     <!--ErrorContent-->
-    <dimen name="error_column_padding">16dp</dimen>
     <dimen name="error_icon_size">18dp</dimen>
     <dimen name="error_title_font_size">18dp</dimen>
     <dimen name="error_title_height">24dp</dimen>
@@ -16,6 +16,11 @@
 
     <!--GithubUserColumn-->
     <dimen name="github_user_row_height">56dp</dimen>
-    <dimen name="github_user_spacer_width">16dp</dimen>
     <dimen name="github_user_image_size">40dp</dimen>
+
+    <!--HeaderLayout-->
+    <dimen name="header_icon_size">48dp</dimen>
+
+    <!--RepositoryCard-->
+    <dimen name="card_shape">8dp</dimen>
 </resources>

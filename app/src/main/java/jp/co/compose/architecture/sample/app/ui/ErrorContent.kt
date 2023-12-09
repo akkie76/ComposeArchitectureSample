@@ -33,7 +33,7 @@ fun ErrorContent(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.error_column_padding)),
+            .padding(dimensionResource(id = R.dimen.large_space)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

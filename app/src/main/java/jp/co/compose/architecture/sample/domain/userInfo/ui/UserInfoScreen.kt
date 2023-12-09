@@ -15,11 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import jp.co.compose.architecture.sample.R
 import jp.co.compose.architecture.sample.app.ui.ProgressIndicator
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
 
@@ -87,7 +88,7 @@ fun UserInfoScreenContent(
                             )
                         }
                         item {
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.medium_space)))
                         }
                     }
                 }

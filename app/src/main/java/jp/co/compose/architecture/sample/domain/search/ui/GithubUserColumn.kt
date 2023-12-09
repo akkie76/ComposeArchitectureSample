@@ -50,7 +50,7 @@ fun GithubUserColumn(
                         }
                     )
             ) {
-                val spacerWidth = dimensionResource(id = R.dimen.github_user_spacer_width)
+                val spacerWidth = dimensionResource(id = R.dimen.large_space)
                 Spacer(modifier = Modifier.width(spacerWidth))
                 AsyncImage(
                     model = user.avatarUrl,

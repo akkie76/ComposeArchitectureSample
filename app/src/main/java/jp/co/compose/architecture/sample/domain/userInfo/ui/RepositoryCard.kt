@@ -12,8 +12,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import jp.co.compose.architecture.sample.R
 import jp.co.compose.architecture.sample.domain.userInfo.data.RepositoryInfo
 
 @Composable
@@ -22,11 +23,10 @@ fun RepositoryCard(
     onSelected: (String) -> Unit = {}
 ) {
     Card(
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.card_shape)),
         modifier = Modifier
-            .padding(start = 16.dp)
-            .padding(end = 16.dp)
-            .padding(bottom = 8.dp)
+            .padding(horizontal = dimensionResource(id = R.dimen.large_space))
+            .padding(bottom = dimensionResource(id = R.dimen.medium_space))
             .fillMaxWidth()
             .selectable(
                 selected = true,
@@ -36,7 +36,7 @@ fun RepositoryCard(
             )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(dimensionResource(id = R.dimen.large_space))
         ) {
             Text(
                 text = repository.name,
@@ -49,7 +49,7 @@ fun RepositoryCard(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp),
+                    .padding(top = dimensionResource(id = R.dimen.small_space)),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
@@ -58,7 +58,7 @@ fun RepositoryCard(
                 )
                 Text(
                     text = "⭐ ${repository.stars}",
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(top = dimensionResource(id = R.dimen.small_space)),
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
