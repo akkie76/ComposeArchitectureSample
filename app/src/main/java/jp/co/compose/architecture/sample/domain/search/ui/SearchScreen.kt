@@ -30,7 +30,6 @@ fun SearchScreen(
     onNavigate: (GithubUser) -> Unit
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_CREATE) {

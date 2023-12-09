@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +23,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import jp.co.compose.architecture.sample.R
+import jp.co.compose.architecture.sample.app.ui.Scrollbar
 import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 
 @Composable
@@ -30,41 +32,45 @@ fun GithubUserColumn(
     onSelected: (GithubUser) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
-    LazyColumn {
-        items(
-            count = pagingItems.itemCount,
-            key = pagingItems.itemKey()
-        ) { index ->
-            val user = pagingItems[index] ?: return@items
-            // NOTE: https://m3.material.io/components/lists/specs
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(dimensionResource(id = R.dimen.github_user_row_height))
-                    .selectable(
-                        selected = true,
-                        onClick = {
-                            focusManager.clearFocus()
-                            onSelected(user)
-                        }
-                    )
-            ) {
-                val spacerWidth = dimensionResource(id = R.dimen.large_space)
-                Spacer(modifier = Modifier.width(spacerWidth))
-                AsyncImage(
-                    model = user.avatarUrl,
-                    contentDescription = null,
+    val listState = rememberLazyListState()
+
+    Scrollbar(listState = listState) {
+        LazyColumn(state = listState) {
+            items(
+                count = pagingItems.itemCount,
+                key = pagingItems.itemKey()
+            ) { index ->
+                val user = pagingItems[index] ?: return@items
+                // NOTE: https://m3.material.io/components/lists/specs
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .size(dimensionResource(id = R.dimen.github_user_image_size))
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(modifier = Modifier.width(spacerWidth))
-                Text(
-                    text = user.login,
-                    style = MaterialTheme.typography.bodyLarge
-                )
+                        .fillMaxWidth()
+                        .height(dimensionResource(id = R.dimen.github_user_row_height))
+                        .selectable(
+                            selected = true,
+                            onClick = {
+                                focusManager.clearFocus()
+                                onSelected(user)
+                            }
+                        )
+                ) {
+                    val spacerWidth = dimensionResource(id = R.dimen.large_space)
+                    Spacer(modifier = Modifier.width(spacerWidth))
+                    AsyncImage(
+                        model = user.avatarUrl,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(dimensionResource(id = R.dimen.github_user_image_size))
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(modifier = Modifier.width(spacerWidth))
+                    Text(
+                        text = user.login,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
         }
     }
