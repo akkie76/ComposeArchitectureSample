@@ -23,7 +23,7 @@ Explore the world of GitHub with our user-friendly mobile application, crafted w
 
 This Compose Architecture Sample uses the GitHub API to fetch data. To use the API, you need to obtain a GitHub personal access token. Follow the GitHub Documentation for instructions on how to create a personal access token.
 
-Once you have the token, add this line to the `~/.gradle/gradle.properties file`, either in your user home directory (usually ~/.gradle/gradle.properties on Linux and Mac) or in the project's root folder:
+Once you have the token, add this line to the `~/.gradle/gradle.properties` file, either in your user home directory (usually ~/.gradle/gradle.properties on Linux and Mac) or in the project's root folder:
 
 ```
 github_token=<YOUR-TOKEN>
