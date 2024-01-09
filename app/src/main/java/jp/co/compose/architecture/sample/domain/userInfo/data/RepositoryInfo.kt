@@ -1,15 +1,17 @@
 package jp.co.compose.architecture.sample.domain.userInfo.data
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class RepositoryInfo(
     val name: String,
     val description: String?,
-    @SerializedName("html_url")
+    @Json(name = "html_url")
     val url: String,
     val fork: Boolean,
     val language: String?,
-    @SerializedName("stargazers_count")
+    @Json(name = "stargazers_count")
     var stars: Int
 ) {
     val displayDescription: String

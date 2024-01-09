@@ -9,13 +9,14 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GithubApiService {
+
     /**
-     * Searches for GitHub users based on the specified query.
+     * GitHubユーザを検索する
      *
-     * @param query The search query.
-     * @param page The page number for paginated results.
-     * @param perPage The number of items per page.
-     * @return A [GithubSearchUsersResponse] containing the search results.
+     * @param query 検索クエリ
+     * @param page ページ数
+     * @param perPage ページごと取得数
+     * @return [GithubSearchUsersResponse] の一覧
      */
     @GET("search/users")
     suspend fun searchUsers(
@@ -25,10 +26,10 @@ interface GithubApiService {
     ): GithubSearchUsersResponse
 
     /**
-     * Fetches information about a specific GitHub user.
+     * GitHubユーザの詳細情報を取得する
      *
-     * @param login The GitHub username of the user.
-     * @return A [GithubUser] object representing the user's information.
+     * @param login ログイン名
+     * @return [GithubUser]
      */
     @GET("users/{login}")
     suspend fun users(
@@ -36,10 +37,10 @@ interface GithubApiService {
     ): GithubUserInfo
 
     /**
-     * Retrieves a list of repositories for the specified GitHub user.
+     * リポジトリ一覧を取得する
      *
-     * @param login The GitHub username of the user.
-     * @return A list of [RepositoryInfo] objects representing the user's repositories.
+     * @param login ログイン名
+     * @return [RepositoryInfo] の一覧
      */
     @GET("users/{login}/repos")
     suspend fun repos(
