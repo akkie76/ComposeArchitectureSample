@@ -11,6 +11,11 @@ import androidx.browser.customtabs.CustomTabsService.ACTION_CUSTOM_TABS_CONNECTI
 import java.lang.IllegalStateException
 import javax.inject.Inject
 
+interface ProvideBrowserUseCase {
+
+    fun launch(activity: Activity, url: String)
+}
+
 class ProvideBrowserUseCaseImpl @Inject constructor() : ProvideBrowserUseCase {
 
     private val customTabsIntent: CustomTabsIntent = CustomTabsIntent.Builder().build()

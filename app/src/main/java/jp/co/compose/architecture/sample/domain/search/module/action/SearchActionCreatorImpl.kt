@@ -8,6 +8,13 @@ import jp.co.compose.architecture.sample.domain.search.usecase.SearchUsersUseCas
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+interface SearchActionCreator {
+
+    fun search(query: String): Flow<PagingData<GithubUser>>
+
+    fun updateState(loadState: LoadState)
+}
+
 class SearchActionCreatorImpl @Inject constructor(
     private val dispatcher: SearchDispatcher,
     private val searchUsersUseCase: SearchUsersUseCase

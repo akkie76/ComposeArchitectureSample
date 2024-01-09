@@ -4,6 +4,11 @@ import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoA
 import jp.co.compose.architecture.sample.domain.userInfo.module.store.UserInfoStore
 import javax.inject.Inject
 
+interface UserInfoDispatcher {
+
+    fun dispatch(userInfoAction: UserInfoAction)
+}
+
 class UserInfoDispatcherImpl @Inject constructor(
     private val store: UserInfoStore
 ) : UserInfoDispatcher {

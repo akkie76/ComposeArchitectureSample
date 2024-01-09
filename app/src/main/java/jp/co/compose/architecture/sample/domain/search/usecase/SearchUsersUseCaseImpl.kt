@@ -6,6 +6,11 @@ import jp.co.compose.architecture.sample.domain.search.data.SearchUsersRepositor
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+interface SearchUsersUseCase {
+
+    fun search(query: String): Flow<PagingData<GithubUser>>
+}
+
 class SearchUsersUseCaseImpl @Inject constructor(
     private val searchUsersRepository: SearchUsersRepository
 ) : SearchUsersUseCase {

@@ -4,6 +4,11 @@ import jp.co.compose.architecture.sample.domain.search.module.action.SearchActio
 import jp.co.compose.architecture.sample.domain.search.module.store.SearchStore
 import javax.inject.Inject
 
+interface SearchDispatcher {
+
+    fun dispatch(searchAction: SearchAction)
+}
+
 class SearchDispatcherImpl @Inject constructor(
     private val store: SearchStore
 ) : SearchDispatcher {

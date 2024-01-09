@@ -6,6 +6,15 @@ import jp.co.compose.architecture.sample.domain.userInfo.usecase.GetUserInfoUseC
 import jp.co.compose.architecture.sample.domain.userInfo.usecase.ProvideBrowserUseCase
 import javax.inject.Inject
 
+interface UserInfoActionCreator {
+
+    suspend fun fetchUserInfo(login: String)
+
+    suspend fun retry(login: String)
+
+    fun launchBrowser(activity: Activity, url: String)
+}
+
 class UserInfoActionCreatorImpl @Inject constructor(
     private val dispatcher: UserInfoDispatcher,
     private val getUserInfoUseCase: GetUserInfoUseCase,

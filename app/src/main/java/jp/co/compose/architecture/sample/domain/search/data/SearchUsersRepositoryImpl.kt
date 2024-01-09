@@ -7,6 +7,11 @@ import jp.co.compose.architecture.sample.app.data.GithubApiService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+interface SearchUsersRepository {
+
+    fun search(query: String): Flow<PagingData<GithubUser>>
+}
+
 class SearchUsersRepositoryImpl @Inject constructor(
     private val githubApiService: GithubApiService
 ) : SearchUsersRepository {

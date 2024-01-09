@@ -7,6 +7,11 @@ import jp.co.compose.architecture.sample.domain.userInfo.data.UserInfo
 import jp.co.compose.architecture.sample.domain.userInfo.data.UserInfoRepository
 import javax.inject.Inject
 
+interface GetUserInfoUseCase {
+
+    suspend fun fetchUserInfo(login: String): UserInfo
+}
+
 class GetUserInfoUseCaseImpl @Inject constructor(
     private val userInfoRepository: UserInfoRepository
 ) : GetUserInfoUseCase {
