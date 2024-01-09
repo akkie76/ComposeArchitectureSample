@@ -3,9 +3,10 @@ package jp.co.compose.architecture.sample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.ramcosta.composedestinations.DestinationsNavHost
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.compose.architecture.sample.app.ui.theme.ComposeArchitectureSampleTheme
-import jp.co.compose.architecture.sample.domain.ComposeArchitectureApp
+import jp.co.compose.architecture.sample.domain.NavGraphs
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -13,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeArchitectureSampleTheme {
-                ComposeArchitectureApp()
+                DestinationsNavHost(navGraph = NavGraphs.root)
             }
         }
     }

@@ -16,18 +16,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import jp.co.compose.architecture.sample.app.ui.ErrorContent
 import jp.co.compose.architecture.sample.app.ui.ProgressIndicator
-import jp.co.compose.architecture.sample.domain.search.data.GithubUser
+import jp.co.compose.architecture.sample.domain.destinations.UserInfoScreenDestination
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
 import jp.co.compose.architecture.sample.domain.search.ui.component.GithubUserColumn
 import jp.co.compose.architecture.sample.domain.search.ui.component.InitialContent
 import jp.co.compose.architecture.sample.domain.search.ui.component.SearchBar
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
-    onNavigate: (GithubUser) -> Unit
+    navigator: DestinationsNavigator
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
@@ -77,7 +82,7 @@ fun SearchScreen(
             when (state) {
                 is SearchAction.NotLoading -> {
                     GithubUserColumn(pagingItems) { githubUser ->
-                        onNavigate(githubUser)
+                        navigator.navigate(UserInfoScreenDestination(githubUser))
                     }
                 }
                 is SearchAction.Loading -> {

@@ -16,17 +16,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import jp.co.compose.architecture.sample.app.ui.ErrorContent
+import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
 import jp.co.compose.architecture.sample.domain.userInfo.ui.component.InitialContent
 import jp.co.compose.architecture.sample.domain.userInfo.ui.component.RepositoryColumn
 import kotlinx.coroutines.launch
 
+@Destination(navArgsDelegate = GithubUser::class)
 @Composable
 fun UserInfoScreen(
     viewModel: UserInfoViewModel = hiltViewModel(),
-    login: String,
-    onBackClick: () -> Unit = {}
+    navigator: DestinationsNavigator
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
@@ -43,8 +46,8 @@ fun UserInfoScreen(
         }
     }
 
-    LaunchedEffect(login) {
-        viewModel.onFetchUserInfo(login)
+    LaunchedEffect(Unit) {
+        viewModel.onFetchUserInfo()
     }
 
     val state by viewModel.uiState
@@ -53,13 +56,13 @@ fun UserInfoScreen(
 
     UserInfoContent(
         state = state,
-        onBackClick = onBackClick,
+        onBackClick = { navigator.navigateUp() },
         onSelected = { url ->
             viewModel.onLaunchBrowser(activity, url)
         },
         onRetry = {
             coroutineScope.launch {
-                viewModel.onRetry(login)
+                viewModel.onRetry()
             }
         }
     )

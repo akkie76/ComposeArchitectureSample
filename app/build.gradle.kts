@@ -3,8 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jlleitschuh.gradle.ktlint")
     id("kotlin-android")
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -66,20 +66,20 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     implementation("androidx.browser:browser:1.7.0")
     implementation("com.google.dagger:hilt-android:2.48.1")
-    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.48.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
-    implementation("androidx.navigation:navigation-compose:2.7.5")
     implementation("androidx.paging:paging-compose:3.2.1")
     implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("com.github.nanihadesuka:LazyColumnScrollbar:1.9.0")
+    implementation("io.github.raamcosta.compose-destinations:animations-core:1.9.55")
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.55")
 
     testImplementation("junit:junit:4.13.2")
 
