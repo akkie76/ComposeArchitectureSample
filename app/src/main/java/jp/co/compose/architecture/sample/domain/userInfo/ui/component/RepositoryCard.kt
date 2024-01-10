@@ -20,7 +20,7 @@ import jp.co.compose.architecture.sample.domain.userInfo.data.RepositoryInfo
 @Composable
 fun RepositoryCard(
     repository: RepositoryInfo,
-    onSelected: (String) -> Unit = {}
+    onSelect: (String) -> Unit = {}
 ) {
     Card(
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.card_shape)),
@@ -31,7 +31,7 @@ fun RepositoryCard(
             .selectable(
                 selected = true,
                 onClick = {
-                    onSelected(repository.url)
+                    onSelect(repository.url)
                 }
             )
     ) {

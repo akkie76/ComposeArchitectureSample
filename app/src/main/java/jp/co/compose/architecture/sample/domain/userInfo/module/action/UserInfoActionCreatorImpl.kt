@@ -21,6 +21,11 @@ class UserInfoActionCreatorImpl @Inject constructor(
     private val provideBrowserUseCase: ProvideBrowserUseCase
 ) : UserInfoActionCreator {
 
+    /**
+     * ユーザ詳細情報を取得する
+     *
+     * @param login ログイン名
+     */
     override suspend fun fetchUserInfo(login: String) {
         try {
             val userInfo = getUserInfoUseCase.fetchUserInfo(login)
@@ -30,11 +35,22 @@ class UserInfoActionCreatorImpl @Inject constructor(
         }
     }
 
+    /**
+     * ユーザ情報を再取得する
+     *
+     * @param login ログイン名
+     */
     override suspend fun retry(login: String) {
         dispatcher.dispatch(UserInfoAction.Initialize())
         fetchUserInfo(login)
     }
 
+    /**
+     * カスタムタブでブラウザを開く
+     *
+     * @param activity Activity
+     * @param url リポジトリ情報のURL
+     */
     override fun launchBrowser(activity: Activity, url: String) {
         provideBrowserUseCase.launch(activity, url)
     }

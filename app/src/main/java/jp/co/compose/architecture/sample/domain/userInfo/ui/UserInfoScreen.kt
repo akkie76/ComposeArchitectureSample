@@ -3,12 +3,9 @@ package jp.co.compose.architecture.sample.domain.userInfo.ui
 import android.app.Activity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -23,20 +20,21 @@ import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
 import jp.co.compose.architecture.sample.domain.userInfo.ui.component.InitialContent
 import jp.co.compose.architecture.sample.domain.userInfo.ui.component.RepositoryColumn
-import kotlinx.coroutines.launch
 
 @Destination(navArgsDelegate = GithubUser::class)
 @Composable
 fun UserInfoScreen(
     viewModel: UserInfoViewModel = hiltViewModel(),
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    activity: Activity = LocalContext.current as Activity,
+    lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
 ) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_CREATE) {
                 viewModel.onCreate()
+            } else if (event == Lifecycle.Event.ON_START) {
+                viewModel.onFetchUserInfo()
             }
         }
         lifecycle.addObserver(observer)
@@ -46,25 +44,13 @@ fun UserInfoScreen(
         }
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.onFetchUserInfo()
-    }
-
     val state by viewModel.uiState
-    val activity = LocalContext.current as Activity
-    val coroutineScope = rememberCoroutineScope()
 
     UserInfoContent(
         state = state,
         onBackClick = { navigator.navigateUp() },
-        onSelected = { url ->
-            viewModel.onLaunchBrowser(activity, url)
-        },
-        onRetry = {
-            coroutineScope.launch {
-                viewModel.onRetry()
-            }
-        }
+        onSelect = { viewModel.onLaunchBrowser(activity, it) },
+        onRetry = { viewModel.onRetry() }
     )
 }
 
@@ -72,28 +58,27 @@ fun UserInfoScreen(
 fun UserInfoContent(
     state: UserInfoAction,
     onBackClick: () -> Unit = {},
-    onSelected: (String) -> Unit = {},
+    onSelect: (String) -> Unit = {},
     onRetry: () -> Unit = {}
 ) {
     Scaffold { paddingValues ->
-        Surface(modifier = Modifier.padding(paddingValues)) {
-            when (state) {
-                is UserInfoAction.Initialize -> {
-                    InitialContent(onBackClick = onBackClick)
-                }
-                is UserInfoAction.Ready -> {
-                    RepositoryColumn(
-                        state = state,
-                        onBackClick = onBackClick,
-                        onSelected = onSelected
-                    )
-                }
-                is UserInfoAction.Error -> {
-                    ErrorContent(
-                        message = state.message,
-                        onRetry = onRetry
-                    )
-                }
+        when (state) {
+            is UserInfoAction.Initialize -> {
+                InitialContent(onBackClick = onBackClick)
+            }
+            is UserInfoAction.Ready -> {
+                RepositoryColumn(
+                    modifier = Modifier.padding(paddingValues),
+                    userInfo = state.data,
+                    onBackClick = onBackClick,
+                    onSelect = onSelect
+                )
+            }
+            is UserInfoAction.Error -> {
+                ErrorContent(
+                    message = state.message,
+                    onRetry = onRetry
+                )
             }
         }
     }

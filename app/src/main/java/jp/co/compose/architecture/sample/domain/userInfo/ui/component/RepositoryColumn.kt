@@ -10,28 +10,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import jp.co.compose.architecture.sample.R
 import jp.co.compose.architecture.sample.app.ui.Scrollbar
-import jp.co.compose.architecture.sample.domain.userInfo.module.action.UserInfoAction
+import jp.co.compose.architecture.sample.domain.userInfo.data.UserInfo
 
 @Composable
 fun RepositoryColumn(
-    state: UserInfoAction,
+    modifier: Modifier = Modifier,
+    userInfo: UserInfo,
     onBackClick: () -> Unit = {},
-    onSelected: (String) -> Unit = {}
+    onSelect: (String) -> Unit = {}
 ) {
     val listState = rememberLazyListState()
 
     Scrollbar(listState = listState) {
-        LazyColumn(state = listState) {
+        LazyColumn(
+            modifier = modifier,
+            state = listState
+        ) {
             item {
                 GithubUserContent(
-                    githubUser = state.data.githubUserInfo,
+                    githubUser = userInfo.githubUserInfo,
                     onBackClick = onBackClick
                 )
             }
-            items(state.data.repositories) { repository ->
+            items(userInfo.repositories) { repository ->
                 RepositoryCard(
                     repository = repository,
-                    onSelected = onSelected
+                    onSelect = onSelect
                 )
             }
             item {

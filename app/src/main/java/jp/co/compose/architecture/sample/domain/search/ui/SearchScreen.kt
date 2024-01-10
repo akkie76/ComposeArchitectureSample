@@ -15,6 +15,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -22,6 +24,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import jp.co.compose.architecture.sample.app.ui.ErrorContent
 import jp.co.compose.architecture.sample.app.ui.ProgressIndicator
 import jp.co.compose.architecture.sample.domain.destinations.UserInfoScreenDestination
+import jp.co.compose.architecture.sample.domain.search.data.GithubUser
 import jp.co.compose.architecture.sample.domain.search.module.action.SearchAction
 import jp.co.compose.architecture.sample.domain.search.ui.component.GithubUserColumn
 import jp.co.compose.architecture.sample.domain.search.ui.component.InitialContent
@@ -32,9 +35,9 @@ import jp.co.compose.architecture.sample.domain.search.ui.component.SearchBar
 @Composable
 fun SearchScreen(
     viewModel: SearchViewModel = hiltViewModel(),
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
 ) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_CREATE) {
@@ -49,7 +52,34 @@ fun SearchScreen(
     }
 
     val state by viewModel.uiState
-    var searchQuery by remember { mutableStateOf(viewModel.query) }
+
+    SearchScreenContent(
+        state = state,
+        pagingItems = viewModel.users.collectAsLazyPagingItems(),
+        query = viewModel.query,
+        onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+        onUpdateLoadState = { viewModel.onUpdateLoadState(it) },
+        onNavigate = { navigator.navigate(UserInfoScreenDestination(it)) },
+        onRefresh = { viewModel.onRefresh(it) }
+    )
+}
+
+@Composable
+private fun SearchScreenContent(
+    state: SearchAction,
+    pagingItems: LazyPagingItems<GithubUser>,
+    query: String,
+    onSearchQueryChange: (String) -> Unit = {},
+    onUpdateLoadState: (LoadState) -> Unit = {},
+    onNavigate: (GithubUser) -> Unit = {},
+    onRefresh: (String) -> Unit = {}
+) {
+    val loadStates = pagingItems.loadState.source
+    var searchQuery by remember { mutableStateOf(query) }
+
+    LaunchedEffect(loadStates) {
+        onUpdateLoadState(loadStates.refresh)
+    }
 
     Scaffold(
         topBar = {
@@ -57,47 +87,39 @@ fun SearchScreen(
                 text = searchQuery,
                 onValueChange = { newValue ->
                     searchQuery = newValue
-                    viewModel.onSearchQueryChange(searchQuery)
+                    onSearchQueryChange(searchQuery)
                 },
                 onClickLeadingIcon = { newValue ->
                     searchQuery = newValue
-                    viewModel.onSearchQueryChange(newValue)
+                    onSearchQueryChange(newValue)
                 }
             )
         }
     ) { paddingValues ->
-        Surface(modifier = Modifier.padding(paddingValues)) {
-            val pagingItems = viewModel.users.collectAsLazyPagingItems()
-            val loadStates = pagingItems.loadState.source
+        if (searchQuery.isEmpty()) {
+            InitialContent(modifier = Modifier.padding(paddingValues))
+            return@Scaffold
+        }
 
-            LaunchedEffect(loadStates) {
-                viewModel.onUpdateLoadState(loadStates.refresh)
+        when (state) {
+            is SearchAction.NotLoading -> {
+                GithubUserColumn(pagingItems = pagingItems) { githubUser ->
+                    onNavigate(githubUser)
+                }
             }
 
-            if (searchQuery.isEmpty()) {
-                InitialContent()
-                return@Surface
+            is SearchAction.Loading -> {
+                ProgressIndicator()
             }
 
-            when (state) {
-                is SearchAction.NotLoading -> {
-                    GithubUserColumn(pagingItems) { githubUser ->
-                        navigator.navigate(UserInfoScreenDestination(githubUser))
+            is SearchAction.Error -> {
+                ErrorContent(
+                    message = state.message,
+                    onRetry = {
+                        searchQuery = ""
+                        onRefresh(searchQuery)
                     }
-                }
-                is SearchAction.Loading -> {
-                    ProgressIndicator()
-                }
-                is SearchAction.Error -> {
-                    val errorState = state as SearchAction.Error
-                    ErrorContent(
-                        message = errorState.message,
-                        onRetry = {
-                            searchQuery = ""
-                            viewModel.onRefresh(searchQuery)
-                        }
-                    )
-                }
+                )
             }
         }
     }
